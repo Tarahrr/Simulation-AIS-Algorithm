@@ -11,7 +11,7 @@ public class AisAlgorithm {
     final static double max = 1.0;
     final static double min = 0.0;
     //************************************************Initialize****************************************************************
-    public static void initializePopulation(){           // meghdar dehi avaliye be sorate random
+    public static void initializePopulation(){           // Initialize (random)
         double n=0.0,r=0.0;
         for(int i=0;i<pop_size;i++)
             for(int j=0;j<2;j++){
@@ -35,7 +35,6 @@ public class AisAlgorithm {
         return c;
 
     }
-
     //****************************************************Mutation**************************************************************
     public static double [][] mutationFunction(double[][] arr,int popNum){
 
@@ -55,8 +54,6 @@ public class AisAlgorithm {
             delta =  rand/100;
         }
         delta =(double)Math.round(delta * 10000)/10000;
-      //  System.out.println(delta);
-      //  System.out.println(arr[popNum][0]+"     "+arr[popNum][1]+"      "+arr[popNum][2]+"      "+delta);
         if( arr[popNum][0] +delta <=1 && arr[popNum][0] +delta>=0 ){
             arr[popNum][0] = arr[popNum][0] +delta;
             arr[popNum][0]=(double)Math.round(arr[popNum][0] * 10000)/10000;
@@ -73,9 +70,6 @@ public class AisAlgorithm {
             arr[popNum][1] = arr[popNum][1] -delta;
             arr[popNum][1]=(double)Math.round(arr[popNum][1] * 10000)/10000;
         }
-
-      //  System.out.println(arr[popNum][0]+"     "+arr[popNum][1]+"      "+arr[popNum][2]);
-      //  System.out.println("------------------------------------------------------------");
         return  arr;
 
     }
@@ -111,11 +105,11 @@ public class AisAlgorithm {
         int k=0;
         double [][] newPopulation = new double[pop_size][4];
 
-        // 2 ta az jamiate ghabli ke behtarin fitness ro darad negah midarim
+
+        // keep the 2 previews population which had the better fitness
        // newPopulation[0] = oldPopulation[0];
         //newPopulation[1] = oldPopulation[1];
-        // behtarin fitness haro entekhab mikonim
-
+        // choose the good fitness
         for(int i =0; i<pop_size && k<sizeClone;i++){
             newPopulation[i] =clone[k];
             k++;
@@ -149,17 +143,13 @@ public class AisAlgorithm {
         }
         //SORT
         population = sort(population,pop_size);
-
         double  [][] populationClone = new double[(int)sum][4];
         //CLONE
         populationClone = Clone(populationClone,(int)sum,population,pop_size);
         //MUTATION
-        //print(populationClone,(int)sum);
         for (int i =0;i<(int)sum;i++)  {
               populationClone=mutationFunction(populationClone,i);
         }
-        //System.out.println("----------------------------------------------------------------");
-       // print(populationClone,(int)sum);
         //FITNESS
         for (int i =0;i<(int)sum;i++)  {
             populationClone[i][2] = fitnessFunction(populationClone[i][0], populationClone[i][1]);
@@ -172,4 +162,3 @@ public class AisAlgorithm {
         System.out.println(population[0][0]+"   "+population[0][1]);
     }
 }
-//*/
